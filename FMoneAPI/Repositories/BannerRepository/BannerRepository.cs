@@ -20,7 +20,6 @@ namespace FMoneAPI.Repositories.BannerRepository
 
         public async Task<Banner> AddBanner(Banner banner)
         {
-            var xxx = 5555;
             _context.Banner.Add(banner);
             await _context.SaveChangesAsync();
             return banner;
