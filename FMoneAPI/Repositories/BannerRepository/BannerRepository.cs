@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FMoneAPI.Data;
+using FMoneAPI.DTOs;
 using FMoneAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,12 @@ namespace FMoneAPI.Repositories.BannerRepository
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Banner>> GetBanners() => await _context.Banner.ToListAsync();
+        public async Task<IEnumerable<Banner>> GetBanners(bool sortDescending = false)
+        {
+            return sortDescending
+                ? await _context.Banner.OrderByDescending(b => b.SortOrder).ToListAsync()
+                : await _context.Banner.OrderBy(b => b.SortOrder).ToListAsync();
+        }
         public async Task<Banner> GetBannerById(int id) => await _context.Banner.FindAsync(id);
 
         public async Task<Banner> AddBanner(Banner banner)
@@ -44,6 +50,22 @@ namespace FMoneAPI.Repositories.BannerRepository
             existingBanner.ImageUrl = banner.ImageUrl;
             await _context.SaveChangesAsync();
             return existingBanner;
+        }
+        public async Task UpdateSortOrderAsync(List<BannerSortOrderDto> banners)
+        {
+            var bannerIds = banners.Select(b => b.Id).ToList();
+            var bannerEntities = await _context.Banner.Where(b => bannerIds.Contains(b.ID)).ToListAsync();
+
+            foreach (var banner in bannerEntities)
+            {
+                var newSortOrder = banners.FirstOrDefault(b => b.Id == banner.ID)?.SortOrder;
+                if (newSortOrder.HasValue)
+                {
+                    banner.SortOrder = newSortOrder.Value;
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FMoneAPI.Models;
+﻿using FMoneAPI.DTOs;
+using FMoneAPI.Models;
 using FMoneAPI.Repositories.BannerRepository;
 using FMoneAPI.Repositories.UserRepository;
 
@@ -31,6 +32,15 @@ namespace FMoneAPI.Services.BannerService
         public Task<Banner> UpdateBanner(int id, Banner banner)
         {
             return _bannerRepository.UpdateBanner(id, banner);
+        }
+        public async Task UpdateSortOrderAsync(BannerSortRequestDTO request)
+        {
+            if (request.Banners == null || request.Banners.Count == 0)
+            {
+                throw new ArgumentException("Banners list cannot be empty");
+            }
+
+            await _bannerRepository.UpdateSortOrderAsync(request.Banners);
         }
     }
 }

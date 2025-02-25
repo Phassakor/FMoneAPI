@@ -1,4 +1,5 @@
 ﻿using Azure;
+using FMoneAPI.DTOs;
 using FMoneAPI.Models;
 using FMoneAPI.Services.BannerService;
 using Microsoft.AspNetCore.Mvc;
@@ -151,6 +152,20 @@ namespace FMoneAPI.Controllers
 
             await _bannerService.DeleteBanner(id);
             return NoContent();
+        }
+
+        [HttpPut("sortOrder")]
+        public async Task<IActionResult> UpdateSortOrder([FromBody] BannerSortRequestDTO request)
+        {
+            try
+            {
+                await _bannerService.UpdateSortOrderAsync(request);
+                return Ok(new { status = 200, message = "Sort order updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
         }
     }
 }

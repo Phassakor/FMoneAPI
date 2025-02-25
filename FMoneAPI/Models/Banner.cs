@@ -8,5 +8,6 @@
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string? Link { get; set; }
+        public int? SortOrder { get; set; }
     }
 }
