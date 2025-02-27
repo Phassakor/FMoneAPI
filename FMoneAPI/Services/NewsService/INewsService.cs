@@ -12,5 +12,6 @@ namespace FMoneAPI.Services.NewsService
         Task<bool> DeleteNewsAsync(int id);
         Task<IEnumerable<NewsCategoryMapping>> GetAllCategory();
         Task<NewsCategoryMapping> GetGetByIdlCategory(int id);
+        Task UpdateSortOrderAsync(NewsSortRequestDTO request);
     }
 }

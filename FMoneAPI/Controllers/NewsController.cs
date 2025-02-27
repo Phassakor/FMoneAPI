@@ -174,5 +174,19 @@ namespace FMoneAPI.Controllers
             if (!isDeleted) return NotFound();
             return NoContent();
         }
+
+        [HttpPut("sortOrder")]
+        public async Task<IActionResult> UpdateSortOrder([FromBody] NewsSortRequestDTO request)
+        {
+            try
+            {
+                await _newsService.UpdateSortOrderAsync(request);
+                return Ok(new { status = 200, message = "Sort order updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

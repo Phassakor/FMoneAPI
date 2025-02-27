@@ -14,5 +14,6 @@ namespace FMoneAPI.Repositories.NewsRepository
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<NewsCategoryMapping>> GetAllCategory();
         Task<NewsCategoryMapping> GetGetByIdlCategory(int id);
+        Task UpdateSortOrderAsync(List<NewsSortOrderDto> news);
     }
 }

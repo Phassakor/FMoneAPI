@@ -176,5 +176,21 @@ namespace FMoneAPI.Repositories.NewsRepository
 
             return categoryMapping;
         }
+        public async Task UpdateSortOrderAsync(List<NewsSortOrderDto> news)
+        {
+            var newsIds = news.Select(b => b.Id).ToList();
+            var newsEntities = await _context.News.Where(b => newsIds.Contains(b.Id)).ToListAsync();
+
+            foreach (var getNews in newsEntities)
+            {
+                var newSortOrder = news.FirstOrDefault(b => b.Id == getNews.Id)?.SortOrder;
+                if (newSortOrder.HasValue)
+                {
+                    getNews.SortOrder = newSortOrder.Value;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

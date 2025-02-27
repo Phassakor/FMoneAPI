@@ -91,5 +91,13 @@ namespace FMoneAPI.Services.NewsService
         {
             return await _newsRepository.GetGetByIdlCategory(id);
         }
+        public async Task UpdateSortOrderAsync(NewsSortRequestDTO request)
+        {
+            if (request.News == null || request.News.Count == 0)
+            {
+                throw new ArgumentException("News list cannot be empty");
+            }
+            await _newsRepository.UpdateSortOrderAsync(request.News);
+        }
     }
 }
