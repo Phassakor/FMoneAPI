@@ -10,5 +10,6 @@ namespace FMoneAPI.Repositories.NewsCategoryRepository
         Task<NewsCategory> CreateAsync(NewsCategory category);
         Task<NewsCategory?> UpdateAsync(int id, NewsCategoryDTO categoryDto);
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<NewsCategoryMapping>> GetAllNewsCategoryMapping();
     }
 }

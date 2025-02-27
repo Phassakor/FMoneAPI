@@ -57,5 +57,9 @@ namespace FMoneAPI.Repositories.NewsCategoryRepository
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<IEnumerable<NewsCategoryMapping>> GetAllNewsCategoryMapping()
+        {
+            return await _context.Newscategorymapping.ToListAsync();
+        }
     }
 }

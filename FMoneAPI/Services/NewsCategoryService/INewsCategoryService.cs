@@ -1,4 +1,5 @@
 ﻿using FMoneAPI.DTOs;
+using FMoneAPI.Models;
 
 namespace FMoneAPI.Services.NewsCategoryService
 {

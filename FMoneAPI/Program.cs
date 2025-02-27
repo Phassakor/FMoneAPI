@@ -36,6 +36,8 @@ using FMoneAPI.Repositories.BannerRepository;
 using FMoneAPI.Services.BannerService;
 using FMoneAPI.Repositories.NewsCategoryRepository;
 using FMoneAPI.Services.NewsCategoryService;
+using FMoneAPI.Services.NewsService;
+using FMoneAPI.Repositories.NewsRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +85,8 @@ builder.Services.AddScoped<IBannerRepository, BannerRepository>();
 builder.Services.AddScoped<IBannerService, BannerService>();
 builder.Services.AddScoped<INewsCategoryRepository, NewsCategoryRepository>();
 builder.Services.AddScoped<INewsCategoryService, NewsCategoryService>();
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<INewsService, NewsService>();
 
 // add Authorization Middleware
 builder.Services.AddAuthorization();

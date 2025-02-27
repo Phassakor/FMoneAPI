@@ -99,7 +99,7 @@ namespace FMoneAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] IFormFile file, [FromForm] string title, [FromForm] string link)
+        public async Task<IActionResult> Update(int id, [FromForm] IFormFile? file, [FromForm] string title, [FromForm] string link)
         {
             var banner = await _bannerService.GetBannerById(id);
             if (banner == null)

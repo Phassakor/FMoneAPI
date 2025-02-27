@@ -17,24 +17,28 @@ namespace FMoneAPI.Services.NewsCategoryService
         public async Task<IEnumerable<NewsCategoryDTO>> GetAllCategoriesAsync()
         {
             var categories = await _newsCategoryRepository.GetAllAsync();
+            var mappingNewsCategory = await _newsCategoryRepository.GetAllNewsCategoryMapping();
             return categories.Select(c => new NewsCategoryDTO
             {
                 Id = c.Id,
                 Name = c.Name,
-                Status = c.Status
+                Status = c.Status,
+                NewsCount = mappingNewsCategory.Count(n => n.CategoryId == c.Id)
             });
         }
 
         public async Task<NewsCategoryDTO?> GetCategoryByIdAsync(int id)
         {
             var category = await _newsCategoryRepository.GetByIdAsync(id);
+            var mappingNewsCategory = await _newsCategoryRepository.GetAllNewsCategoryMapping();
             if (category == null) return null;
 
             return new NewsCategoryDTO
             {
                 Id = category.Id,
                 Name = category.Name,
-                Status = category.Status
+                Status = category.Status,
+                NewsCount = mappingNewsCategory.Count(n => n.CategoryId == category.Id)
             };
         }
 

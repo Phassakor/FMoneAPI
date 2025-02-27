@@ -13,7 +13,7 @@ namespace FMoneAPI.Data
         public DbSet<UserMenuPermission> UserMenuPermission { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<NewsCategory> Newscategory { get; set; }
-        public DbSet<NewsCategoryMapping> NewsCategoryMappings { get; set; }
+        public DbSet<NewsCategoryMapping> Newscategorymapping { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
