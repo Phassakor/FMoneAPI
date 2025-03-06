@@ -94,11 +94,10 @@ builder.Services.AddAuthorization();
 // add Controller
 builder.Services.AddControllers();
 // Listen at 0.0.0.0 for other machines.
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(5000);  // setting port (port: 5000)
-});
-//builder.WebHost.UseUrls("http://0.0.0.0:5000");
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.ListenAnyIP(5000);  // setting port (port: 5000)
+//});
 
 builder.Services.AddAutoMapper(typeof(UserProfile));  // add AutoMapper
 

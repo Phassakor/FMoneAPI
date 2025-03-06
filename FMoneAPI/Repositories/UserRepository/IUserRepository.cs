@@ -19,5 +19,6 @@ namespace FMoneAPI.Repositories.UserRepository
           List<UserMenuPermission> permissionsToRemove);
         Task<List<UserMenuPermission>> GetUserPermissionsMenuByUserId(int userId);
         Task<List<Menus>> GetTotalMenus();
+        Task<object?> Login(string username, string password);
     }
 }

@@ -123,5 +123,18 @@ namespace FMoneAPI.Controllers
 
             return Ok(new { status = 200, data = newArray });
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password)
+        {
+            var Data = await _userService.Login(username, password);
+            if (Data == null)
+                return Unauthorized(new { message = "Invalid credentials" });
+
+            return Ok(new
+            {
+                status = 200,
+                Data
+            });
+        }
     }
 }

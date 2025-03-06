@@ -123,5 +123,9 @@ namespace FMoneAPI.Services.UserService
         {
             return await _userRepository.GetTotalMenus();
         }
+        public async Task<object?> Login(string username, string password)
+        {
+            return await _userRepository.Login(username, password);
+        }
     }
 }

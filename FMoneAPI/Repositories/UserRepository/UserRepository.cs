@@ -116,5 +116,14 @@ namespace FMoneAPI.Repositories.UserRepository
         {
             return await _context.Menus.ToListAsync();
         }
+        public async Task<object?> Login(string username, string password) //Task<string?>
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.PasswordHash == password);
+            if (user == null)
+                return null;
+
+
+            return user;
+        }
     }
 }

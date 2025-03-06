@@ -13,5 +13,6 @@ namespace FMoneAPI.Services.UserService
         Task<(bool success, string message)> UpdateUserPermissionsAsync(UpdateUserPermissionDTO request);
         Task<List<UserMenuPermission>> GetUserPermissionsMenuByUserId(int userId);
         Task<List<Menus>> GetTotalMenus();
+        Task<object?> Login(string username, string password);
     }
 }
