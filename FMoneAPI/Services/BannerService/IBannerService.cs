@@ -11,5 +11,7 @@ namespace FMoneAPI.Services.BannerService
         Task<bool> DeleteBanner(int id);
         Task<Banner> UpdateBanner(int id, Banner banner);
         Task UpdateSortOrderAsync(BannerSortRequestDTO request);
+        Task<int> UpdateBannerStatus(int id, bool isActive);
+        Task<int> UpdateBannerCTR(int id);
     }
 }

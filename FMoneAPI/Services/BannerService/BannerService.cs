@@ -42,5 +42,13 @@ namespace FMoneAPI.Services.BannerService
 
             await _bannerRepository.UpdateSortOrderAsync(request.Banners);
         }
+        public async Task<int> UpdateBannerStatus(int id, bool isActive)
+        {
+            return await _bannerRepository.UpdateBannerStatus(id, isActive);
+        }
+        public async Task<int> UpdateBannerCTR(int id)
+        {
+            return await (_bannerRepository.UpdateBannerCTR(id));
+        }
     }
 }

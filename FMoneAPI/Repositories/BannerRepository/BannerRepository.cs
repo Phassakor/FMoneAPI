@@ -71,5 +71,23 @@ namespace FMoneAPI.Repositories.BannerRepository
         {
             return await _context.Banner.CountAsync();
         }
+        public async Task<int> UpdateBannerStatus(int id, bool isActive)
+        {
+            return await _context.Banner
+                .Where(b => b.ID == id)
+                .ExecuteUpdateAsync(s => s.SetProperty(
+                    b => b.Status,
+                    isActive ? 1 : 0 // ✅ อัปเดตตรงที่ DB
+                ));
+        }
+        public async Task<int> UpdateBannerCTR(int id)
+        {
+            return await _context.Banner
+                .Where(b => b.ID == id)
+               .ExecuteUpdateAsync(s => s.SetProperty(
+                    b => b.CTR,
+                    b => (b.CTR ?? 0) + 1 // ✅ ตรวจสอบ null ก่อนบวก 1
+                ));
+        }
     }
 }

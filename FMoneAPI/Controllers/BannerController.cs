@@ -2,7 +2,9 @@
 using FMoneAPI.DTOs;
 using FMoneAPI.Models;
 using FMoneAPI.Services.BannerService;
+using FMoneAPI.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace FMoneAPI.Controllers
 {
@@ -11,9 +13,11 @@ namespace FMoneAPI.Controllers
     public class BannerController : ControllerBase
     {
         private readonly IBannerService _bannerService;
-        public BannerController(IBannerService bannerService)
+        private readonly IUserService _userService;
+        public BannerController(IBannerService bannerService, IUserService userService)
         {
             _bannerService = bannerService ?? throw new ArgumentNullException(nameof(bannerService));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         private string GetBase64FromImagePath(string imageUrl)
@@ -39,6 +43,7 @@ namespace FMoneAPI.Controllers
                 b.ID,
                 b.Title,
                 b.Link,
+                b.UpdateBy,
                 b.UpdateDate,
                 b.Status,
                 b.CTR,
@@ -62,6 +67,7 @@ namespace FMoneAPI.Controllers
                 banner.ID,
                 banner.Title,
                 banner.Link,
+                banner.UpdateBy,
                 banner.UpdateDate,
                 banner.Status,
                 banner.CTR,
@@ -106,12 +112,14 @@ namespace FMoneAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] IFormFile? file, [FromForm] string title, [FromForm] string link)
+        public async Task<IActionResult> Update(int id, [FromForm] IFormFile? file, [FromForm] string title, [FromForm] string link, [FromForm] string userId)
         {
             var banner = await _bannerService.GetBannerById(id);
+            var getUser = await _userService.GetUserById(int.Parse(userId));
             if (banner == null)
                 return NotFound(new { message = "Banner not found" });
-
+            if (getUser == null)
+                return NotFound(new { message = "User not found" });
             // อัปโหลดไฟล์ใหม่
             if (file != null && file.Length > 0)
             {
@@ -140,6 +148,7 @@ namespace FMoneAPI.Controllers
 
             banner.Title = title ?? banner.Title;
             banner.Link = link ?? banner.Link;
+            banner.UpdateBy = getUser.Fname ?? banner.UpdateBy;
 
             await _bannerService.UpdateBanner(id, banner);
             return Ok(new { status = 200, data = banner });
@@ -173,6 +182,22 @@ namespace FMoneAPI.Controllers
             {
                 return BadRequest(new { success = false, message = ex.Message });
             }
+        }
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] bool isActive)
+        {
+            var updatedBanner = await _bannerService.UpdateBannerStatus(id, isActive);
+            if (updatedBanner == null) return NotFound();
+
+            return Ok(new { status = 200, message = "Status updated successfully" });
+        }
+        [HttpPut("{id}/ctr")]
+        public async Task<IActionResult> UpdateCTR(int id)
+        {
+            var updatedBanner = await _bannerService.UpdateBannerCTR(id);
+            if (updatedBanner == null) return NotFound();
+
+            return Ok(new { status = 200, message = "CTR updated successfully" });
         }
     }
 }
