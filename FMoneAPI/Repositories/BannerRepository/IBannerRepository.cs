@@ -11,5 +11,6 @@ namespace FMoneAPI.Repositories.BannerRepository
         Task<bool> DeleteBanner(int id);
         Task<Banner> UpdateBanner(int id, Banner banner);
         Task UpdateSortOrderAsync(List<BannerSortOrderDto> banners);
+        Task<int> GetTotalBannerAsync();
     }
 }

@@ -67,5 +67,9 @@ namespace FMoneAPI.Repositories.BannerRepository
 
             await _context.SaveChangesAsync();
         }
+        public async Task<int> GetTotalBannerAsync()
+        {
+            return await _context.Banner.CountAsync();
+        }
     }
 }

@@ -38,9 +38,13 @@ namespace FMoneAPI.Controllers
             {
                 b.ID,
                 b.Title,
+                b.Link,
+                b.UpdateDate,
+                b.Status,
+                b.CTR,
                 ImageUrl = b.ImageUrl,
-                ImageBase64 = GetBase64FromImagePath(b.ImageUrl),
-                b.Link
+                ImageBase64 = GetBase64FromImagePath(b.ImageUrl)
+
             });
 
             return Ok(new { status = 200, data = response });
@@ -57,9 +61,12 @@ namespace FMoneAPI.Controllers
             {
                 banner.ID,
                 banner.Title,
+                banner.Link,
+                banner.UpdateDate,
+                banner.Status,
+                banner.CTR,
                 ImageUrl = banner.ImageUrl,
-                ImageBase64 = GetBase64FromImagePath(banner.ImageUrl), // แปลงเป็น Base64
-                banner.Link
+                ImageBase64 = GetBase64FromImagePath(banner.ImageUrl) // แปลงเป็น Base64
             };
 
             return Ok(new { status = 200, data = response });

@@ -9,5 +9,7 @@
         public DateTime? UpdateDate { get; set; }
         public string? Link { get; set; }
         public int? SortOrder { get; set; }
+        public int? Status { get; set; }
+        public int? CTR { get; set; }
     }
 }
