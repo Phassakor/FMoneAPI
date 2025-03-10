@@ -78,13 +78,14 @@ namespace FMoneAPI.Controllers
             return Ok(new { status = 200, data = response });
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] IFormFile file, [FromForm] string title, [FromForm] string link)
+        public async Task<IActionResult> Create([FromForm] IFormFile file, [FromForm] string title, [FromForm] string link, [FromForm] string userBy)
         {
             if (file == null || file.Length == 0)
                 return BadRequest(new { message = "File is required" });
 
             if (string.IsNullOrEmpty(title))
                 return BadRequest(new { message = "Title is required" });
+
 
             string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
             if (!Directory.Exists(uploadsFolder))
@@ -103,6 +104,7 @@ namespace FMoneAPI.Controllers
                 Title = title,
                 ImageUrl = $"/uploads/{fileName}",
                 CreateDate = DateTime.Now,
+                UpdateBy = userBy,
                 Link = link
             };
 
