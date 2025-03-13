@@ -185,6 +185,7 @@ namespace FMoneAPI.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] bool isActive)
         {
@@ -193,6 +194,7 @@ namespace FMoneAPI.Controllers
 
             return Ok(new { status = 200, message = "Status updated successfully" });
         }
+
         [HttpPut("{id}/ctr")]
         public async Task<IActionResult> UpdateCTR(int id)
         {

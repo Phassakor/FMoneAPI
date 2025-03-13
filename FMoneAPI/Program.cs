@@ -109,8 +109,12 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
+                "http://localhost",
                 "http://localhost:3000",
-                "http://localhost:5000"
+                "http://localhost:5000",
+                "http://119.59.118.117",
+                "http://119.59.118.117:18988",
+                "http://119.59.118.117:5000"
                 ) // enable URL of client
                   .AllowAnyHeader()
                   .AllowAnyMethod();
@@ -135,8 +139,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseStaticFiles();
-app.UseAuthentication();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
