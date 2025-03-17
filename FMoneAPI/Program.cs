@@ -89,43 +89,48 @@ builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<INewsService, NewsService>();
 
 // add Authorization Middleware
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
 
 // add Controller
 builder.Services.AddControllers();
 // Listen at 0.0.0.0 for other machines.
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(5000);  // setting port (port: 5000)
-});
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.ListenAnyIP(5000);  // setting port (port: 5000)
+//});
 
 builder.Services.AddAutoMapper(typeof(UserProfile));  // add AutoMapper
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // add CORS policy
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy =>
-        {
-            policy.WithOrigins(
-                "http://localhost",
-                "http://localhost:3000",
-                "http://localhost:5000",
-                "http://119.59.118.117",
-                "http://119.59.118.117:18988",
-                "http://119.59.118.117:5000"
-                ) // enable URL of client
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//        policy =>
+//        {
+//            policy.WithOrigins(
+//                "http://localhost",
+//                "http://localhost:3000",
+//                "http://localhost:5000",
+//                "http://119.59.118.117",
+//                "http://119.59.118.117:18988",
+//                "http://119.59.118.117:5000"
+//                ) // enable URL of client
+//                  .AllowAnyHeader()
+//                  .AllowAnyMethod();
+//        });
+//});
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.UseCors(MyAllowSpecificOrigins); // add CORS
+//app.UseCors(MyAllowSpecificOrigins); // add CORS
+app.UseCors(options => {
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
 
 // add Middleware
 //if (app.Environment.IsDevelopment())
@@ -139,8 +144,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthentication();
+//app.UseRouting();
+//app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

@@ -203,5 +203,27 @@ namespace FMoneAPI.Controllers
 
             return Ok(new { status = 200, message = "CTR updated successfully" });
         }
+        [HttpPost("/test")]
+        public IActionResult PostData([FromBody] string model)
+        {
+            return Ok("Data received");
+        }
+
+        [HttpPut("{id}/test")]
+        public IActionResult PutData(int id, [FromBody] string model)
+        {
+            return Ok($"Updated {id}");
+        }
+        [HttpPatch("{id}/test")]
+        public IActionResult PatchtData(int id, [FromBody] string model)
+        {
+            return Ok($"Updated some field {id}");
+        }
+
+        [HttpDelete("{id}/test")]
+        public IActionResult DeleteData(int id)
+        {
+            return Ok($"Deleted {id}");
+        }
     }
 }
